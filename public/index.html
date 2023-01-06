@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docker Composer [Node and Postgres]</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <form>
+      <input type="text" id="name" name="name" placeholder="Name"></input>
+      <input type="email" id="email" name="email" placeholder="Email"></input>
+      <button type="button" id="btn-submit" onclick="register()">Cadastrar</button>
+    </form>
+    <div id="ctn-cards">
+      <template>
+        <div class="card">
+          <img src="./profile-picture.png" alt="Avatar" width="200px" />
+          <div class="container">
+            <h4></h4>
+            <p></p>
+            <button>Delete</button>
+          </div>
+        </div>
+      </template>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

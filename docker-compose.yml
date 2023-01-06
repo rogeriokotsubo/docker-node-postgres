@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  # These are the configurations for the Node app
+  # When Docker Compose starts this container it will automatically
+  # use the Dockerfile in the directory to configure it
+  app:
+    build: .
+    depends_on:
+      # The app does not work without the database
+      # so this ensures the database is loaded first
+      - postgres
+    ports:
+      - "8080:8080"
+    volumes:
+      # Maps the current project directory `.` to
+      # the working directory in the container
+      - ./:/usr/src/app/
+      # node_modules workaround for volumes
+      - /usr/src/app/node_modules
+    networks:
+      - aula6  
+
+  # This is the configuration for the PostgreSQL database container
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      # The Node app will use these to connect to the database
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=root
+    ports:
+      # Standard port for PostgreSQL databases
+      - "5432:5432"
+    volumes:
+      # When the PostgresSQL container is started it will run the scripts
+      # provided in the `docker-entrypoint-initdb.d` directory, this connects
+      # the init-db.sql file to that directory so that it gets run
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - aula6  
+
+networks:
+    aula6:
+        driver: bridge
